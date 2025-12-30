@@ -1,5 +1,5 @@
 //
-// Created by User on 28.12.2025.
+// Created by inż. Dawid Pisarczyk on 28.12.2025.
 //
 
 #ifndef LIGHTNING_CONTROL_UNIT_H
@@ -19,7 +19,8 @@ typedef struct {
     struct gpio_dt_spec can_rx_led;
 }lcu_can_t;
 
-
+void lcu_lights_driver_thread(void *p1, void *p2, void *p3);
+void lcu_lights_logic_thread(void *p1, void *p2, void *p3);
 
 void lcu_can_init();
 

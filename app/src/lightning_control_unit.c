@@ -35,23 +35,43 @@ void lcu_can_init() {
     }
 }
 
-#define MY_STACK_SIZE 500
-#define MY_PRIORITY 5
+#define LCU_LIGHTS_LOGIC_STACK_SIZE 512
+#define LCU_LIGHTS_LOGIC_PRIORITY 5
 
-K_THREAD_STACK_DEFINE(my_stack_area, MY_STACK_SIZE);
-struct k_thread my_thread_data;
+K_THREAD_STACK_DEFINE(lcu_lights_logic_stack_area, LCU_LIGHTS_LOGIC_STACK_SIZE);
+struct k_thread lcu_lights_logic_thread_data;
 
-void lcu_light_logic_thread(void *p1, void *p2, void *p3) {
+void lcu_lights_logic_thread(void *p1, void *p2, void *p3) {
 
 }
+
+#define LCU_LIGHTS_DRIVER_STACK_SIZE 512
+#define LCU_LIGHTS_DRIVER_PRIORITY 5
+
+K_THREAD_STACK_DEFINE(lcu_lights_driver_stack_area, LCU_LIGHTS_DRIVER_STACK_SIZE);
+struct k_thread lcu_lights_driver_thread_data;
+
+void lcu_lights_driver_thread(void *p1, void *p2, void *p3) {
+
+}
+
+
 
 void lcu_tasks_init() {
-    k_tid_t lcu_light_logic_tid = k_thread_create(&my_thread_data, my_stack_area,
-                                     K_THREAD_STACK_SIZEOF(my_stack_area),
-                                     lcu_light_logic_thread,
+    k_tid_t lcu_lights_logic_tid = k_thread_create(&lcu_lights_logic_thread_data, lcu_lights_logic_stack_area,
+                                     K_THREAD_STACK_SIZEOF(lcu_lights_logic_stack_area),
+                                     lcu_lights_logic_thread,
                                      NULL, NULL, NULL,
-                                     MY_PRIORITY, 0, K_NO_WAIT);
+                                     LCU_LIGHTS_LOGIC_PRIORITY, 0, K_NO_WAIT);
+
+    k_tid_t lcu_lights_driver_tid = k_thread_create(&lcu_lights_driver_thread_data, lcu_lights_driver_stack_area,
+                                     K_THREAD_STACK_SIZEOF(lcu_lights_driver_stack_area),
+                                     lcu_lights_driver_thread,
+                                     NULL, NULL, NULL,
+                                     LCU_LIGHTS_DRIVER_PRIORITY, 0, K_NO_WAIT);
 }
+
+
 
 
 
