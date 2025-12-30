@@ -11,6 +11,7 @@ LOG_MODULE_REGISTER(main);
 #include <zephyr/device.h>
 #include <zephyr/drivers/spi.h>
 #include <zephyr/sys/util.h>
+#include "lightning_control_unit.h"
 
 #define STRIP_NODE		DT_ALIAS(led_strip)
 
@@ -37,31 +38,31 @@ static const struct device *const strip = DEVICE_DT_GET(STRIP_NODE);
 
 int main(void)
 {
-    size_t color = 0;
-    int rc;
-
-    if (device_is_ready(strip)) {
-        LOG_INF("Found LED strip device %s", strip->name);
-    } else {
-        LOG_ERR("LED strip device %s is not ready", strip->name);
-        return 0;
-    }
-
-    LOG_INF("Displaying pattern on strip");
+    // size_t color = 0;
+    // int rc;
+    //
+    // if (device_is_ready(strip)) {
+    //     LOG_INF("Found LED strip device %s", strip->name);
+    // } else {
+    //     LOG_ERR("LED strip device %s is not ready", strip->name);
+    //     return 0;
+    // }
+    //
+    // LOG_INF("Displaying pattern on strip");
     while (1) {
-        for (size_t cursor = 0; cursor < ARRAY_SIZE(pixels); cursor++) {
-            memset(&pixels, 0x00, sizeof(pixels));
-            memcpy(&pixels[cursor], &colors[color], sizeof(struct led_rgb));
-
-            rc = led_strip_update_rgb(strip, pixels, STRIP_NUM_PIXELS);
-            if (rc) {
-                LOG_ERR("couldn't update strip: %d", rc);
-            }
-
-            k_sleep(DELAY_TIME);
-        }
-
-        color = (color + 1) % ARRAY_SIZE(colors);
+        // for (size_t cursor = 0; cursor < ARRAY_SIZE(pixels); cursor++) {
+        //     memset(&pixels, 0x00, sizeof(pixels));
+        //     memcpy(&pixels[cursor], &colors[color], sizeof(struct led_rgb));
+        //
+        //     rc = led_strip_update_rgb(strip, pixels, STRIP_NUM_PIXELS);
+        //     if (rc) {
+        //         LOG_ERR("couldn't update strip: %d", rc);
+        //     }
+        //
+        //     k_sleep(DELAY_TIME);
+        // }
+        //
+        // color = (color + 1) % ARRAY_SIZE(colors);
     }
 
     return 0;
